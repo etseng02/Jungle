@@ -1,7 +1,8 @@
 class Admin::DashboardController < ApplicationController
 
-  http_basic_authenticate_with name: 'jungle', password: 'book'
+  include HttpAuthConcern
 
   def show
+    
   end
 end
