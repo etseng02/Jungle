@@ -4,6 +4,13 @@
     <h1>My Cart</h1>
   </header>
 
+  <%if enhanced_cart == [] %>
+  <div class="alert alert-danger" role="alert">
+    You have no items in your cart!
+    Click <a href="/">here</a> to return to Home
+    </div>
+    <% else %>
+
   <div class="panel panel-default items">
     <table class="table table-bordered">
       <thead>
@@ -15,6 +22,9 @@
         </tr>
       </thead>
       <tbody>
+      <%=puts "THIS IS THE CARRTTTT #{enhanced_cart}"%>
+
+
         <% enhanced_cart.each do |item| %>
           <%= render 'item', product: item[:product], quantity: item[:quantity].to_i %>
         <% end %>
@@ -32,6 +42,8 @@
     </table>
   </div>
 
+
+
   <div class="row">
     <div class="col-xs-12">
       <%= form_tag orders_path do %>
@@ -48,5 +60,6 @@
       <% end %>
     </div>
   </div>
+  <% end %>
 
 </section>
