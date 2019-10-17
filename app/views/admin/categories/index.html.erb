@@ -27,7 +27,7 @@
         </td>
         <td>
         <% puts @products %>
-        <p> <%= @products.where("category_id == category.id") %> </p>
+        <p> <%= category.products.length %> </p>
       </td>
       </tr>
       <%}%>
