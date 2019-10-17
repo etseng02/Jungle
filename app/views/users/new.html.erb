@@ -1,0 +1,18 @@
+<h1>Signup!</h1>
+
+<%= form_for :user, url: '/users' do |form| %>
+
+  <div class="form-group">
+    <%= form.label :"Full Name" %>
+    <%= form.text_field :name, class: 'form-control' %>
+    <%= form.label :Email %>
+    <%= form.text_field :email, class: 'form-control' %>
+    <%= form.label :Password %>
+    <%= form.password_field :password, class: 'form-control' %>
+    <%= form.label :"Password Confirmation"%>
+    <%= form.password_field :password_confirmation, class: 'form-control' %>
+  </div>
+  <br>
+  <%= form.submit 'Sign Up!', class: 'btn btn-primary' %>
+
+<% end %>
