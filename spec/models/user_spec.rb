@@ -6,11 +6,13 @@ describe User, type: :model do
   describe 'Validations' do
  
     subject { User.new(password: "test", password_confirmation: "test", name: "blah", email:"test@blah.com") }
-    
-    it "validates uniqueness of email" do
-      User.create(password: "test", password_confirmation: "test", name: "blah", email:"test@blah.com")
-      user = User.create(password: "test", password_confirmation: "test", name: "blah", email:"test@blah.com")
-      expect(user.errors.full_messages).to include ("Email has already been taken")
+   
+    it 'should have a name' do
+      expect(subject.name).to be_present
+    end
+
+    it 'should have an email' do
+      expect(subject.email).to be_present
     end
 
     it 'should have a password' do
@@ -20,10 +22,23 @@ describe User, type: :model do
     it 'should have a password confirmation' do
       expect(subject.password_confirmation).to be_present
     end
+
+  end #End of describe Validations
+
+  describe '.authenticate_with_credentials' do
+
+    #subject { User.new(password: "test", password_confirmation: "test", name: "blah", email:"test@blah.com") }
+
+    it "validates uniqueness of email" do
+      User.create(password: "test", password_confirmation: "test", name: "blah", email:"test@blah.com")
+      user = User.create(password: "test", password_confirmation: "test", name: "blah", email:"test@blah.com")
+      expect(user.errors.full_messages).to include ("Email has already been taken")
+    end
     
     it 'should not pass if password does not match password confirmation' do
-      subject.password_confirmation = "nottrue"
-      expect(subject.password).not_to be == (subject.password_confirmation)
+      user = User.create(password: "12345", password_confirmation: "12345", name: "blah", email:"test@blah.com")
+      user_login = User.authenticate_with_credentials('test@blah.com', '67890')
+      expect(user.errors.full_messages)
     end
     
     it 'should not pass if password is left blank' do
@@ -36,11 +51,18 @@ describe User, type: :model do
       expect(user.errors.full_messages).to include ("Password is too short (minimum is 3 characters)")
     end
 
+    it 'should pass if email is in a weird case' do
+      user = User.create(password: "12345", password_confirmation: "12345", name: "blah", email:"test@blah.com")
+      user_login = User.authenticate_with_credentials('TeST@blah.com', '12345')
+      expect(user_login).to eql(user)
+    end
 
-
-  end
-
-
-
-
+    it 'should pass if email is in a weird case' do
+      user = User.create(password: "12345", password_confirmation: "12345", name: "blah", email:"test@blah.com")
+      user_login = User.authenticate_with_credentials(' test@blah.com', '12345')
+      expect(user_login).to eql(user)
+    end
+    
+   
+  end #End of describe authenticate_with_credentials
 end
