@@ -27,6 +27,6 @@ RSpec.feature "users can navigate from the home page to the product detail", typ
     
     # VERIFY
     expect(page).to have_css 'section.products-show'
-    save_screenshot
+    #save_screenshot
   end
 end
